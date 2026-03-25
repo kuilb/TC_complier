@@ -1,0 +1,39 @@
+# 指令集手册
+## OPCODE + IN1 + IN2 + OUT
+
+## 立即数
+IMM1        0b10XXXXXX
+IMM2        0b01XXXXXX
+IMM         0b11000110
+
+## 运算/IO 0bXX00
+ADD         0b00000000
+SUB         0b00000001
+AND         0b00000010
+OR          0b00000011
+NOT         0b00000100
+XOR         0b00000101
+MOV         0b00000110
+I/O         0b00000111
+
+### RAM操作
+#### READ(+IMM1) + RAM_ADDR + DATA + 0
+READ        0b00001000
+#### WRITE(+IMM1) + RAM_ADDR + 0 + DATA
+WRITE       0b00001001
+
+## 栈操作 0bXX01
+POP         0b00010001
+PUSH        0b00010000
+RST         0b00011001
+
+## 条件跳转 0bXX10
+IF_E        0b00100000
+IF_L        0b00100010
+IF_LOE      0b00100011
+IF_G        0b00100100
+IF_GOE      0b00100101
+
+## 无条件跳转
+JMP         0b10100110
+CALL        0b10111110
