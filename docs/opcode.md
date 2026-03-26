@@ -1,5 +1,10 @@
 # 指令集手册
 ## OPCODE + IN1 + IN2 + OUT
+## 地址
+REG 0-5 = 0bXXXXX000-0bXXXXX101
+I/O         0bXXXXX111
+MOV + DATA + 0 + OUTPUT
+MOV + INPUT + 0 + REG
 
 ## 立即数
 IMM1        0b10XXXXXX
@@ -17,7 +22,7 @@ MOV         0b00000110
 I/O         0b00000111
 
 ### RAM操作
-#### READ(+IMM1) + RAM_ADDR + DATA + 0
+#### READ(+IMM1) + RAM_ADDR + 0 + REG
 READ        0b00001000
 #### WRITE(+IMM1) + RAM_ADDR + 0 + DATA
 WRITE       0b00001001
@@ -28,6 +33,7 @@ PUSH        0b00010000
 RST         0b00011001
 
 ## 条件跳转 0bXX10
+#### OP(IMM/REG) + ARG1 + ARG2 + JMP_ADDR
 IF_E        0b00100000
 IF_L        0b00100010
 IF_LOE      0b00100011

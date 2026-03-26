@@ -9,29 +9,31 @@ Author:Kulib
 Date:2026-3-25
 Version:0.1
 """
-
+from utils.logger import report_error, Color
 class RegisterPool:
     def __init__(self):
         self.regs = ["REG0", "REG1", "REG2", "REG3", "REG4", "REG5"]
         self.used = {reg: False for reg in self.regs}
 
     """
-    获取空闲寄存器
+    分配一个空闲寄存器。
+    node: 触发分配的 AST 节点（可选），用于精准报错
+    source_code: 源码字符串（可选）
     """
-    def alloc(self, count=1):
+    def alloc(self, node=None, source_code=None):
         avaliable = [r for r in self.regs if not self.used[r]]
 
-        if len(avaliable) < count:
-            raise RuntimeError("编译错误: 寄存器不足，无法分配更多寄存器。")
+        if not avaliable:
+            # 如果有位置信息，抛出带颜色的智能错误
+            if node and source_code:
+                report_error(source_code, "寄存器不足: 没有可用的寄存器！", node['token'])
+            else:
+                report_error("", "寄存器不足: 没有可用的寄存器！", None)
         
-        allocated = avaliable[:count]
-        for r in allocated:
-            self.used[r] = True
+        reg = avaliable[0]
+        self.used[reg] = True
 
-        if count == 1:
-            return allocated[0]
-        else:
-            return tuple(allocated)
+        return reg
         
     """
     释放寄存器
